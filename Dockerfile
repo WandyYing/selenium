@@ -67,7 +67,7 @@ RUN apt-get -qqy update \
     unzip \
     git
 
-RUN apt-get install -y python-wxgtk3.0
+# RUN apt-get install -y python-wxgtk3.0
 
 #ssh-server
 RUN apt-get -qqy update \
