@@ -52,6 +52,7 @@ LABEL maintainer "Ying Jun <Wandy1208@gmail.com>"
 # RUN echo "Setting time zone to '${TZ}'" \
 #   && echo "${TZ}" > /etc/timezone \
 #   && dpkg-reconfigure --frontend noninteractive tzdata
+USER root
 
 ENV ROOT_PASSWORD root
 
