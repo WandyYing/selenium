@@ -75,6 +75,7 @@ ENV DISPLAY=:99
 # install selenium
 RUN pip install selenium==3.12.0
 
+COPY scripts/ /home/seluser/exec/
 # install requirements
 RUN pip install -Ur /home/seluser/exec/requirements.txt 
 
@@ -89,11 +90,6 @@ RUN apt-get -qqy update \
         && sed -ri 's/^PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config \
         && sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config \
         && rm -rf /var/cache/apk/* /tmp/*
-
-
-COPY scripts/ /home/seluser/exec/
-
-
 
 COPY entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
