@@ -10,7 +10,7 @@ ARG UBUNTU_DATE=20180228
 #== Ubuntu xenial is 16.04, i.e. FROM ubuntu:16.04
 # Find latest images at https://hub.docker.com/r/library/ubuntu/
 # Layer size: ~122 MB
-FROM python:3.6
+FROM python:2.7
 
 
 MAINTAINER Ying Jun <Wandy1208@gmail.com>
