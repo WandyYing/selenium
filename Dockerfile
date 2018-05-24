@@ -31,16 +31,16 @@ ENV LANGUAGE ${LANG_WHICH}_${LANG_WHERE}.${ENCODING}
 ENV LANG ${LANGUAGE}
 # Layer size: small: ~9 MB
 # Layer size: small: ~9 MB MB (with --no-install-recommends)
-RUN apt -qqy update \
-  && apt -qqy --no-install-recommends install \
+RUN apt-get -qqy update \
+  && apt-get -qqy --no-install-recommends install \
     language-pack-en \
     tzdata \
     locales \
   && locale-gen ${LANGUAGE} \
   && dpkg-reconfigure --frontend noninteractive locales \
-  && apt -qyy autoremove \
-  && rm -rf /var/lib/apt/lists/* \
-  && apt -qyy clean
+  && apt-get -qyy autoremove \
+  && rm -rf /var/cache/apk/* /tmp/*  \
+  && apt-get -qyy clean
 
 #===================
 # Timezone settings

@@ -2,6 +2,5 @@ robotframework==3.0.2
 robotframework-selenium2library==1.8.0
 robotframework-pabot>=0.43
 reportportal-client
-robotframework-ride==1.5.2.1
 robotframework-reportportal-ng
 pyyaml
