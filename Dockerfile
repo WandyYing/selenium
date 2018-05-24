@@ -19,41 +19,28 @@ MAINTAINER Ying Jun <Wandy1208@gmail.com>
 LABEL maintainer "Ying Jun <Wandy1208@gmail.com>"
 
 USER root
-#==============================
-# Locale and encoding settings
-#==============================
-# TODO: Allow to change instance language OS and Browser level
-#  see if this helps: https://github.com/rogaha/docker-desktop/blob/68d7ca9df47b98f3ba58184c951e49098024dc24/Dockerfile#L57
-ENV LANG_WHICH en
-ENV LANG_WHERE US
-ENV ENCODING UTF-8
-ENV LANGUAGE ${LANG_WHICH}_${LANG_WHERE}.${ENCODING}
-ENV LANG ${LANGUAGE}
-# Layer size: small: ~9 MB
-# Layer size: small: ~9 MB MB (with --no-install-recommends)
-RUN apt-get -qqy update \
-  && apt-get -qqy --no-install-recommends install \
-    language-pack-en \
-    tzdata \
-    locales \
-  && locale-gen ${LANGUAGE} \
-  && dpkg-reconfigure --frontend noninteractive locales \
-  && apt-get -qyy autoremove \
-  && rm -rf /var/cache/apk/* /tmp/*  \
-  && apt-get -qyy clean
-
-#===================
-# Timezone settings
-#===================
-# Full list at https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-#  e.g. "US/Pacific" for Los Angeles, California, USA
-# e.g. ENV TZ "US/Pacific"
-ENV TZ="Asia/Shanghai"
-# Apply TimeZone
-# Layer size: tiny: 1.339 MB
-RUN echo "Setting time zone to '${TZ}'" \
-  && echo "${TZ}" > /etc/timezone \
-  && dpkg-reconfigure --frontend noninteractive tzdata
+# #==============================
+# # Locale and encoding settings
+# #==============================
+# # TODO: Allow to change instance language OS and Browser level
+# #  see if this helps: https://github.com/rogaha/docker-desktop/blob/68d7ca9df47b98f3ba58184c951e49098024dc24/Dockerfile#L57
+# ENV LANG_WHICH en
+# ENV LANG_WHERE US
+# ENV ENCODING UTF-8
+# ENV LANGUAGE ${LANG_WHICH}_${LANG_WHERE}.${ENCODING}
+# ENV LANG ${LANGUAGE}
+# # Layer size: small: ~9 MB
+# # Layer size: small: ~9 MB MB (with --no-install-recommends)
+# RUN apt-get -qqy update \
+#   && apt-get -qqy --no-install-recommends install \
+#     language-pack-en \
+#     tzdata \
+#     locales \
+#   && locale-gen ${LANGUAGE} \
+#   && dpkg-reconfigure --frontend noninteractive locales \
+#   && apt-get -qyy autoremove \
+#   && rm -rf /var/cache/apk/* /tmp/*  \
+#   && apt-get -qyy clean
 
 ENV ROOT_PASSWORD root
 
@@ -67,6 +54,20 @@ RUN apt-get install -y google-chrome-stable
 RUN apt-get install -yqq unzip
 RUN wget -O /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE`/chromedriver_linux64.zip
 RUN unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
+
+#===================
+# Timezone settings
+#===================
+# Full list at https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+#  e.g. "US/Pacific" for Los Angeles, California, USA
+# e.g. ENV TZ "US/Pacific"
+ENV TZ="Asia/Shanghai"
+# Apply TimeZone
+# Layer size: tiny: 1.339 MB
+RUN apt-get install -yqq tzdata
+RUN echo "Setting time zone to '${TZ}'" \
+  && echo "${TZ}" > /etc/timezone \
+  && dpkg-reconfigure --frontend noninteractive tzdata
 
 # set display port to avoid crash
 ENV DISPLAY=:99
